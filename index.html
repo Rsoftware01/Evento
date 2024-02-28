@@ -3,10 +3,89 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculadora Financeira</title>
+    <link rel="stylesheet" href="./style.css" />
+    <title>Evento empresa</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Defina a altura mínima do corpo para ocupar toda a tela */
+        background-color: #e3dd61; /* Cor de fundo */
+      }
+
+      form {
+        width: 90%; /* Defina a largura do formulário */
+        max-width: 400px; /* Defina a largura máxima do formulário */
+        padding: 20px; /* Adiciona um preenchimento interno ao formulário */
+        box-sizing: border-box;
+        background-color: white; /* Cor de fundo do formulário */
+        border-radius: 8px; /* Adiciona bordas arredondadas ao formulário */
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin-top: 20px; /* Adiciona margem superior ao botão */
+        border: none;
+        cursor: pointer;
+        width: 100%; /* Faz o botão preencher a largura do formulário */
+        border-radius: 4px;
+        box-sizing: border-box; /* Garante que o preenchimento do botão seja incluído na largura total */
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
+    <form id="investment-form">
+      <div class="">
+        <label for="starting-name" class="font-bold text-gray-800"
+          >Nome Completo</label
+        >
+        <div class="flex">
+          <input
+            type="text"
+            class="w-full rounded-r-lg"
+            placeholder="Nome"
+            id="starting-name"
+            name="starting-name"
+            required
+          />
+        </div>
+      </div>
+      <div class="flex w-full flex-col">
+        <label for="telefone" class="font-bold text-gray-800"
+          >Telefone para envio dos resultados</label
+        >
+        <div class="flex">
+          <input
+            type="text"
+            class="w-full rounded-r-lg"
+            placeholder="(##) #####-####"
+            id="telefone"
+            name="telefone"
+          />
+        </div>
+      </div>
+      <div class="flex w-full flex-col">
+        <label for="email" class="font-bold text-gray-800">E-mail</label>
+        <div class="flex">
+          <input
+            type="text"
+            class="w-full"
+            placeholder="email@exemplo.com"
+            id="email"
+            name="email"
+            required
+          />
+        </div>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
   </body>
+  <script src="./main.js"></script>
 </html>
