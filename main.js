@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("email", email);
 
     // Definindo um tempo limite de 10 segundos para a requisição
-    const timeout = 10000; // 10 segundos
+    const timeout = 10; // 10 segundos
 
     // Fazendo a requisição com timeout
     const request = new Promise((resolve, reject) => {

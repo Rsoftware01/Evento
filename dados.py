@@ -20,17 +20,11 @@ class RequestHandler(BaseHTTPRequestHandler):
         telefone = data['telefone'][0]
         email = data['email'][0]
 
-        # Exibindo os dados recebidos
-        print("Dados recebidos do formulário:")
-        print("Nome:", nome)
-        print("Telefone:", telefone)
-        print("Email:", email)
-
         # Conexão ao banco de dados e inserção de dados
         conexao = pyodbc.connect(dados_conexao)
         cursor = conexao.cursor()
         comando = f"""INSERT INTO Dados (nome, telefone, email) VALUES (?, ?, ?)"""
-        cursor.execute(comando, (nome, int(telefone), email))
+        cursor.execute(comando, (nome, telefone, email))
         conexao.commit()
         conexao.close()
 
