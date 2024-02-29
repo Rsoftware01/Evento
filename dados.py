@@ -1,50 +1,30 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from urllib.parse import parse_qs
-import pyodbc
+from flask import Flask, request
 
-dados_conexao = (
-    "Driver={SQL Server};"
-    "Server=Rafael;"
-    "Database=Evento_Mulheres;"
-    "Trusted_Connection=yes;"
-)
+app = Flask(__name__)
 
-class RequestHandler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
+@app.route('/dados', methods=['POST'])
+def handle_data():
+    # Parse dos dados do formulário
+    nome = request.form['nome']
+    telefone = request.form['telefone']
+    email = request.form['email']
 
-        # Parse dos dados do formulário
-        data = parse_qs(post_data.decode('utf-8'))
-        nome = data['nome'][0]
-        telefone = data['telefone'][0]
-        email = data['email'][0]
+    # Adicionando instruções print para depuração
+    print("Dados do formulário recebidos:")
+    print("Nome:", nome)
+    print("Telefone:", telefone)
+    print("Email:", email)
 
-        # Adicionando instruções print para depuração
-        print("Dados do formulário recebidos:")
-        print("Nome:", nome)
-        print("Telefone:", telefone)
-        print("Email:", email)
+    # Conexão ao banco de dados e inserção de dados
+    dados_conexao = "Driver={SQL Server};Server=Rafael;Database=Evento_Mulheres;Trusted_Connection=yes;"
+    conexao = pyodbc.connect(dados_conexao)
+    cursor = conexao.cursor()
+    comando = "INSERT INTO Dados (nome, telefone, email) VALUES (?, ?, ?)"
+    cursor.execute(comando, (nome, telefone, email))
+    conexao.commit()
+    conexao.close()
 
-        # Conexão ao banco de dados e inserção de dados
-        conexao = pyodbc.connect(dados_conexao)
-        cursor = conexao.cursor()
-        comando = f"""INSERT INTO Dados (nome, telefone, email) VALUES (?, ?, ?)"""
-        cursor.execute(comando, (nome, telefone, email))
-        conexao.commit()
-        conexao.close()
-
-        # Envio da resposta de volta ao cliente
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        self.wfile.write("Dados inseridos com sucesso".encode())
-
-def run(server_class=HTTPServer, handler_class=RequestHandler, port=8000):
-    server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
-    print(f'Servidor rodando na porta {port}')
-    httpd.serve_forever()
+    return "Dados inseridos com sucesso"
 
 if __name__ == '__main__':
-    run()
+    app.run(debug=True)
