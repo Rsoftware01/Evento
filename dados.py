@@ -20,6 +20,12 @@ class RequestHandler(BaseHTTPRequestHandler):
         telefone = data['telefone'][0]
         email = data['email'][0]
 
+        # Adicionando instruções print para depuração
+        print("Dados do formulário recebidos:")
+        print("Nome:", nome)
+        print("Telefone:", telefone)
+        print("Email:", email)
+
         # Conexão ao banco de dados e inserção de dados
         conexao = pyodbc.connect(dados_conexao)
         cursor = conexao.cursor()
