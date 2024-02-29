@@ -1,8 +1,9 @@
 from flask import Flask, request
+import pyodbc
 
 app = Flask(__name__)
 
-@app.route('/dados', methods=['POST'])
+@app.route('/dados.py', methods=['POST'])
 def handle_data():
     # Parse dos dados do formulário
     nome = request.form['nome']
